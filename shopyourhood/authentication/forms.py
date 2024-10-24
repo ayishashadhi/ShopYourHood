@@ -54,6 +54,9 @@ class ShopOwnerRegistrationForm(UserCreationForm):
             user.save()
             # Create the shop profile after saving the user
             ShopProfile.objects.create(user=user,
+                                       name=self.cleaned_data['name'],
+                                       phone=self.cleaned_data['phone'],
+                                       address=self.cleaned_data['address'],
                                        owner_name=self.cleaned_data['owner_name'],
                                        shop_number=self.cleaned_data['shop_number'],
                                        location=self.cleaned_data['location'],

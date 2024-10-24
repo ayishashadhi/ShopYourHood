@@ -1,8 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.views import LoginView
 from .forms import CustomerRegistrationForm, ShopOwnerRegistrationForm
 from django.contrib.auth.decorators import login_required
+from .models import ShopProfile
+import os
+
 # from django.utils.decorators import method_decorator
 # from django.views.decorators.cache import never_cache
 
@@ -42,14 +45,21 @@ def shop_owner_dashboard(request):
     
     if not shop_profile.is_verified:
         return redirect('shop_pending_verification')  # Redirect to a pending verification page
-    
-    return render(request, 'dashboard/shop_owner_dashboard.html')
+    return render(request, 'dashboard/shop_owner_dashboard.html',{'shop_profile':shop_profile})
 
 
 # shop pending verification
 @login_required
 def shop_pending_verification(request):
-    return render(request, 'dashboard/shop_pending_verification.html')
+    try:
+        # Check if the user has a shopprofile
+        shop_profile = request.user.shopprofile
+        name = shop_profile.name  # Shop name field
+        print(name,'--------------')
+    except AttributeError:
+        # Handle the case if the shopprofile does not exist
+        name = "Shop Owner"  # Default or fallback name
+    return render(request, 'verify/shop_pending_verification.html',{'name':name})
 
 
 # users login 
@@ -65,3 +75,40 @@ class CustomLoginView(LoginView):
             return reverse('shop_owner_dashboard')
         elif user.user_type == 3: # admin
             return reverse('admin_dashboard')
+        
+        
+# Admin dashboard view (list of pending shop owners)
+@login_required
+def admin_dashboard(request):
+    if request.user.user_type != 3:  # Ensure only admin can access this view
+        return redirect('login')
+
+    # List all unverified shop owners
+    unverified_shops = ShopProfile.objects.filter(is_verified=False).select_related('user')
+    return render(request, 'dashboard/admin_dashboard.html', {'unverified_shops': unverified_shops})
+
+# View to verify or reject a shop
+@login_required
+def verify_shop(request, shop_id):
+    if request.user.user_type != 3:  # Ensure only admin can access this view
+        return redirect('login')
+
+    shop = get_object_or_404(ShopProfile, id=shop_id)
+
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        if action == 'verify':
+            shop.is_verified = True
+            shop.save()
+        elif action == 'reject':
+            # Delete both the ShopProfile and associated CustomUser
+            # Delete the shop proof image if it exists
+            if shop.shop_proof:
+                if os.path.isfile(shop.shop_proof.path):
+                    os.remove(shop.shop_proof.path)
+
+            user = shop.user  # Get the associated CustomUser
+            user.delete()  # This will also delete the ShopProfile due to on_delete=models.CASCADE
+        return redirect('admin_dashboard')
+
+    return render(request, 'verify/verify_shop.html', {'shop': shop})

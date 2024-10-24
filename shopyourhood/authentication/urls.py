@@ -18,4 +18,11 @@ urlpatterns = [
 
     path('login/', views.CustomLoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+
+
+     # Admin dashboard (for verifying shops)
+    path('admin/dashboard/', views.admin_dashboard, name='admin_dashboard'),
+    
+    # Verify or reject a shop
+    path('admin/verify_shop/<int:shop_id>/', views.verify_shop, name='verify_shop'),
 ]   
