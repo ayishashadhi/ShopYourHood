@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    Customer dashboard
+{% endblock %}
+
+{% block navigation %}
+    
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="">Shop Your Hood</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <form action="{% url 'logout' %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link btn btn-link">Logout</button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">Contact</a>
+                </li>   
+            </ul>
+        </div>
+    </div>
+</nav>
+    
+{% endblock %}
+
+
+{% block content %}
+
+    <h2>Welcome, {{ customer_profile.name }}!</h2>
+    <p>This is your customer dashboard.</p>
+    <p>Your Phone: {{ customer_profile.phone }}</p>
+    <p>Your Address: {{ customer_profile.address }}</p>
+{% endblock %}

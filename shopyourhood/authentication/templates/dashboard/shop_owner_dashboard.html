@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    Shop owner dashboard
+{% endblock %}
+
+{% block navigation %}
+    
+    <nav> Shop owner Navigation</nav>
+    
+{% endblock %}
+
+
+{% block content %}
+
+<h2>Welcome, {{ request.user.name }}!</h2>
+<p>This is your shop owner dashboard.</p>
+
+{% endblock %}
+
