@@ -1,15 +1,41 @@
-{% extends "layout.html" %}
-
-
-{% block title %}
-    Customer dashboard
-{% endblock %}
-
+{% extends 'layout.html' %}
 
 {% block content %}
 
-    <h2>Welcome, {{ customer_profile.name }}!</h2>
-    <p>This is your customer dashboard.</p>
-    <p>Your Phone: {{ customer_profile.phone }}</p>
-    <p>Your Address: {{ customer_profile.address }}</p>
+
+<div class="row">
+    {% for category, products in categories.items %}
+        <div class="col-12">
+            <h3>{{ category }}</h3>
+        </div>
+        {% for product in products %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="{{ product.image.url }}" class="card-img-top fixed-card-img" alt="{{ product.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ product.category }}</h6>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="" class="btn btn-primary">
+                            <i class="fas fa-shopping-cart"></i> <!-- Example icon for booking -->
+                        </a>
+                        <a href="" class="btn btn-secondary">
+                            <i class="fas fa-cart-plus"></i> <!-- Example icon for cart -->
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p>No products available in this category.</p>
+        </div>
+        {% endfor %}
+    {% empty %}
+    <div class="col-12">
+        <p class="text-center">No verified products found.</p>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}

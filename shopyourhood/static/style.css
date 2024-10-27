@@ -16,9 +16,15 @@ body {
 #sidebar {
     background-color: #34495E !important; /* Lightened blue-gray for sidebar */
     color: #ffffff;
-    height: 100vh; /* Full viewport height */
-    position: sticky; /* Keeps sidebar fixed while scrolling */
-    width: 570px;
+    /* Remove fixed height */
+    /* height: 100vh;  */
+    position: sticky !important; /* Change position to sticky */
+    top: 0; /* Stick to the top of the viewport */
+    width: 570px; /* Keep this for the desired width */
+    height: auto; /* Let it grow with content */
+    max-height: 100vh; /* Prevent it from growing beyond the viewport height */
+    overflow-y: auto; /* Allow vertical scrolling if needed */
+
 }
 
 

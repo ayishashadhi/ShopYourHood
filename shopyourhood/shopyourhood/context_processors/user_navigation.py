@@ -8,12 +8,14 @@ def user_navigation(request):
         user_type = request.user.user_type  # Assuming user_type is an integer
         if user_type == 1:  # Customer
             navigation = [ 
+                
                 # {'name': 'Cart', 'url': '#', 'icon': 'fas fa-shopping-cart'},
                 {'name': 'Logout', 'url': 'logout', 'icon': 'fas fa-sign-out-alt'},
             ]
             sidebar = [
+                {'name': 'Profile', 'url': 'view_customer_profile', 'icon': 'fas fa-user'},
                 # {'name': 'Bookings', 'url': '#', 'icon': 'fas fa-calendar-check'},
-                # {'name': 'Profile', 'url': '#', 'icon': 'fas fa-user'},
+                
             ]
         elif user_type == 2:  # Shop Owner
             navigation = [

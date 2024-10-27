@@ -6,6 +6,12 @@ urlpatterns = [
     # Customer registration
     path('register/customer/', views.customer_register, name='customer_register'),
 
+    # view and edit customer info
+    path('customer/profile', views.view_customer_profile, name='view_customer_profile'),
+    path('customer/profile/edit/', views.edit_customer_profile, name='edit_customer_profile'),
+
+
+
     # Shop owner registration
     path('register/shop/', views.shop_owner_register, name='shop_owner_register'),
 

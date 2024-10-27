@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.views import LoginView
-from .forms import CustomerRegistrationForm, ShopOwnerRegistrationForm
+from .forms import CustomerRegistrationForm, ShopOwnerRegistrationForm,CustomerProfileForm
 from django.contrib.auth.decorators import login_required
 from .models import ShopProfile
 import os
+from products.models import Product
 
 # from django.utils.decorators import method_decorator
 # from django.views.decorators.cache import never_cache
@@ -35,8 +36,21 @@ def shop_owner_register(request):
 # customer dashboard 
 @login_required
 def customer_dashboard(request):
-    customer_profile = request.user.customerprofile  # Access the related CustomerProfile
-    return render(request, 'dashboard/customer_dashboard.html', {'customer_profile': customer_profile})
+    if request.user.user_type != 1:  # Ensure only admin can access this view
+        return redirect('login')
+    verified_products = Product.objects.filter(is_verified=True).order_by('category')  # Fetch verified products
+    categories = {}
+
+    # Organize products by category
+    for product in verified_products:
+        category_name = product.category
+        if category_name not in categories:
+            categories[category_name] = []
+        categories[category_name].append(product)
+    return render(request, 'dashboard/customer_dashboard.html', {'categories': categories})
+
+
+
 
 # Shop Dashboard 
 @login_required
@@ -119,3 +133,26 @@ def verify_shop(request, shop_id):
         return redirect('admin_dashboard')
 
     return render(request, 'verify/verify_shop.html', {'shop': shop})
+
+
+
+
+# customer profile view 
+@login_required
+def view_customer_profile(request):
+    profile = request.user.customerprofile  # Get the logged-in user's profile
+    return render(request, 'customer/profile.html', {'profile': profile})
+
+@login_required
+def edit_customer_profile(request):
+    profile = request.user.customerprofile
+    user = request.user  # Get the CustomUser instance
+
+    if request.method == 'POST':
+        form = CustomerProfileForm(request.POST, instance=profile, user_instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('view_customer_profile')  # Redirect to the profile view after saving
+    else:
+        form = CustomerProfileForm(instance=profile, user_instance=user)
+    return render(request, 'customer/edit_profile.html', {'form': form})

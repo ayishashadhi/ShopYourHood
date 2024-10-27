@@ -26,6 +26,39 @@ class CustomerRegistrationForm(UserCreationForm):
             CustomerProfile.objects.create(user=user, name=user.name, phone=user.phone, address=user.address)
         return user
 
+
+# sutomer profile edit form 
+
+class CustomerProfileForm(forms.ModelForm):
+    # Add fields from CustomUser
+    email = forms.EmailField()  # Example of a CustomUser field
+    username = forms.CharField()  # Another example
+
+    class Meta:
+        model = CustomerProfile
+        fields = ['name', 'phone', 'address', 'email', 'username']
+
+    def __init__(self, *args, **kwargs):
+        # Accept an instance of CustomUser if provided
+        self.user_instance = kwargs.pop('user_instance', None)
+        super(CustomerProfileForm, self).__init__(*args, **kwargs)
+
+        if self.user_instance:
+            # Populate form fields from CustomUser instance
+            self.fields['email'].initial = self.user_instance.email
+            self.fields['username'].initial = self.user_instance.username
+
+    def save(self, *args, **kwargs):
+        # Save CustomerProfile data
+        profile_instance = super(CustomerProfileForm, self).save(*args, **kwargs)
+        if self.user_instance:
+            # Update and save CustomUser instance fields
+            self.user_instance.email = self.cleaned_data['email']
+            self.user_instance.username = self.cleaned_data['username']
+            self.user_instance.save()
+        return profile_instance
+
+
 # Shop Owner Registration Form
 class ShopOwnerRegistrationForm(UserCreationForm):
     name = forms.CharField(max_length=255)

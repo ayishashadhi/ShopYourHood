@@ -23,5 +23,5 @@ urlpatterns = [
 
     
    
-    path('customer/products/', views.customer_view_verified_products, name='customer_view_verified_products'),
+    # path('customer/products/', views.customer_view_verified_products, name='customer_view_verified_products'),
 ]

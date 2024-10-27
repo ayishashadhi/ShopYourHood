@@ -52,7 +52,7 @@ def add_product_to_shop(request, product_id):
                 shop_product.product = product
                 shop_product.save()
                 messages.success(request, "Product added to your shop.")
-                return redirect('shop_owner_dashboard')
+                return redirect('view_verified_products')
         else:
             form = ShopProductForm()
         return render(request, 'product/add_product_to_shop.html', {'form': form, 'product': product})
@@ -81,7 +81,7 @@ def register_product(request):
             product.is_verified = False  # Set as unverified by default
             product.save()
             messages.success(request, "Product submitted for verification.")
-            return redirect('shop_owner_dashboard')  # Redirect to the shop dashboard or desired page
+            return redirect('view_pending_requests')  # Redirect to the shop dashboard or desired page
     else:
         form = ProductForm()
         
@@ -190,7 +190,4 @@ def view_pending_requests(request):
 
 
 
-# Customer view for viewing verified products
-def customer_view_verified_products(request):
-    verified_products = Product.objects.filter(is_verified=True)
-    return render(request, 'product/customer_view_verified_products.html', {'verified_products': verified_products})
+

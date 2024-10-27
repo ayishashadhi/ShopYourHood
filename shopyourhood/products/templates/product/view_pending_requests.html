@@ -7,7 +7,7 @@
     {% for product in pending_products %}
         <div class="col-md-4 mb-4">
             <div class="card h-100">
-                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                    <img src="{{ product.image.url }}" class="card-img-top .fixed-card-img" alt="{{ product.name }}">
                 <div class="card-body">
                     <h5 class="card-title">{{ product.name }}</h5>
                     <p class="card-text"><strong>Category:</strong> {{ product.category }}</p>
