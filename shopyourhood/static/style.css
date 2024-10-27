@@ -1,0 +1,140 @@
+html, body {
+    height: 100%; /* Ensure the body takes full height */
+    margin: 0; /* Remove default margin */
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* Arrange children vertically */
+}
+
+.container-fluid {
+    display: flex; /* Flex layout for sidebar and main content */
+    flex: 1; /* Allow this to grow and take available space */
+}
+
+#sidebar {
+    background-color: #34495E !important; /* Lightened blue-gray for sidebar */
+    color: #ffffff;
+    height: 100vh; /* Full viewport height */
+    position: sticky; /* Keeps sidebar fixed while scrolling */
+    width: 570px;
+}
+
+
+
+/* product card image sizing  */
+.card .fixed-card-img {
+    width: 100%  !important;
+    height: 200px !important;
+    object-fit: cover !important;
+}
+
+
+
+
+/* shop proof image size */
+.shop_proof{
+height: 200px;
+width: auto;
+}
+
+
+
+main {
+    flex: 1; /* This will take the remaining space */
+}
+
+/* Footer */
+footer {
+    background-color: var(--primary-color) !important;
+    color: #ffffff !important;
+    padding: 20px 0; /* Adjust padding if necessary */
+}
+
+/* Override Bootstrap's colors */
+.bg-primary {
+    background-color: var(--primary-color) !important;
+}
+
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+.text-white {
+    color: #ffffff !important;
+}
+
+.bg-light {
+    background-color: var(--background-color) !important;
+}
+
+.bg-dark {
+    background-color: var(--primary-color) !important;
+    color: #ffffff !important;
+}
+
+/* Colors */
+:root {
+    --primary-color: #2C3E50; /* Deep Blue */
+    --accent-color: #E67E22;  /* Orange */
+    --background-color: #F9F9F9; /* Soft White */
+    --text-color: #333333; /* Dark Gray */
+    --light-gray: #BDC3C7; /* Light Gray */
+}
+
+/* Navbar */
+.navbar, .navbar-light .navbar-brand, .navbar-light .navbar-nav .nav-link {
+    background-color: var(--primary-color) !important;
+    color: #ffffff !important;
+}
+
+.navbar-toggler {
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.btn-primary:hover {
+    background-color: #1f2a35 !important;
+}
+
+.btn-accent {
+    background-color: var(--accent-color) !important;
+    border-color: var(--accent-color) !important;
+}
+
+.btn-accent:hover {
+    background-color: #d36b1c !important;
+}
+
+/* Sidebar */
+#sidebar .nav-link {
+    color: #ffffff !important;
+}
+
+#sidebar .nav-link:hover {
+    background-color: var(--accent-color) !important; /* Keeps accent color for hover */
+}
+
+/* Media Query for Responsiveness */
+@media (max-width: 768px) {
+    #sidebar {
+        display: none; /* Initially hide sidebar */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 50%;
+        height: 100%;
+        background-color: #34495E; /* Match sidebar color */
+        z-index: 1050;
+    }
+    #sidebar.show {
+        display: block; /* Show when toggled */
+    }
+}

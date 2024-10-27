@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2>Verified Products</h2>
+
+<div class="row">
+    {% for shop_product in verified_products %}
+    <div class="col-md-4 mb-4">
+        <div class="card">
+                <img src="{{ shop_product.product.image.url }}" class="card-img-top fixed-card-img" alt="{{ shop_product.product.name }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ shop_product.product.name }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ shop_product.product.category }}</h6>
+                <p class="card-text">Price: ₹{{ shop_product.price }}</p>
+                <p class="card-text">Quantity: {{ shop_product.quantity }}</p>
+
+                <!-- Edit and Delete buttons -->
+                <a href="{% url 'edit_shop_product' shop_product.id %}" class="btn btn-primary btn-sm">Edit</a>
+                <a href="{% url 'delete_shop_product' shop_product.id %}" class="btn btn-danger btn-sm">Delete</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-warning" role="alert">
+            No verified products found.
+        </div>  
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

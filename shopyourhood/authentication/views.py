@@ -80,12 +80,19 @@ class CustomLoginView(LoginView):
 # Admin dashboard view (list of pending shop owners)
 @login_required
 def admin_dashboard(request):
+    name=request.user.username
+    return render(request, 'dashboard/admin_dashboard.html',{'name':name})
+
+
+# Admin dashboard view (list of pending shop owners)
+@login_required
+def shop_verify_list(request):
     if request.user.user_type != 3:  # Ensure only admin can access this view
         return redirect('login')
 
     # List all unverified shop owners
     unverified_shops = ShopProfile.objects.filter(is_verified=False).select_related('user')
-    return render(request, 'dashboard/admin_dashboard.html', {'unverified_shops': unverified_shops})
+    return render(request, 'verify/Shop_verify_list.html', {'unverified_shops': unverified_shops})
 
 # View to verify or reject a shop
 @login_required

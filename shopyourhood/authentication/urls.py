@@ -23,6 +23,9 @@ urlpatterns = [
      # Admin dashboard (for verifying shops)
     path('admin/dashboard/', views.admin_dashboard, name='admin_dashboard'),
     
+    #Veryfing shop list
+    path('admin/shop_verify_list/', views.shop_verify_list, name='shop_verify_list'),
+
     # Verify or reject a shop
     path('admin/verify_shop/<int:shop_id>/', views.verify_shop, name='verify_shop'),
 ]   

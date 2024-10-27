@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    Admin dashboard
+{% endblock %}
+
+
+
+
+{% block content %}
+
+<h2>Pending Shop Verifications</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Category</th>
+            <th>Shop Name</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in unverified_products %}
+        <tr>
+            <td>{{product.name }}</td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.added_by.name }}</td>  <!-- Accessing ShopProfile's name -->
+            <td>{{ product.added_by.user.email }}</td>  <!-- Accessing ShopProfile's user's email -->
+            <td>
+                <a href="{% url 'verify_product' product.id %}">Review</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+
+
+
+{% block content %}
+    <h2>Search for Verified Products</h2>
+
+    <form method="get" action="{% url 'search_verified_products' %}">
+        <input type="text" name="query" placeholder="Search for a product..." value="{{ query }}" required>
+        <button type="submit">Search</button>
+    </form>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p class="info">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    {% if products %}
+        <h3>Search Results</h3>
+        <ul>
+            {% for product in products %}
+                <li>{{ product.name }} - {{ product.price }} - <a href="{% url 'add_product_to_shop' product.id %}">Add to Shop</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        {% if query %}
+        <div class="alert alert-warning" role="alert">
+            <p>No products found. You can register a new product <a href="{% url 'register_product' %}">here</a>.</p>
+        </div>  
+            
+        {% endif %}
+    {% endif %}
+{% endblock %}
