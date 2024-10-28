@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2>Choose a Shop for {{ product.name }}</h2>
+<p>Select a shop where you want to {% if action == 'book' %}book{% else %}add to cart{% endif %} this product.</p>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="list-group">
+        {% for shop_product in shop_products %}
+        <label class="list-group-item">
+            <input type="radio" name="shop_id" value="{{ shop_product.shop.id }}" required>
+            <strong>Shop Name:</strong> {{ shop_product.shop.name }} <br>
+            <strong>Price:</strong> ₹{{ shop_product.price }} <br>
+            <strong>Location:</strong> {{ shop_product.shop.location }}
+        </label>
+        {% empty %}
+        <div class="alert alert-warning" role="alert">
+            No shops found with this product.
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Quantity input -->
+    <div class="form-group">
+        <label for="quantity">Quantity:</label>
+        <input type="number" name="quantity" id="quantity" value="1" min="1" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3 mb-3">
+        {% if action == 'book' %}Book Now{% else %}Add to Cart{% endif %}
+    </button>
+</form>
+{% endblock %}

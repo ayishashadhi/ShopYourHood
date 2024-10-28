@@ -9,12 +9,13 @@ def user_navigation(request):
         if user_type == 1:  # Customer
             navigation = [ 
                 
-                # {'name': 'Cart', 'url': '#', 'icon': 'fas fa-shopping-cart'},
+                {'name': 'Cart', 'url': 'view_cart', 'icon': 'fas fa-shopping-cart'},
                 {'name': 'Logout', 'url': 'logout', 'icon': 'fas fa-sign-out-alt'},
             ]
             sidebar = [
+                {'name': 'Dashboard', 'url': 'customer_dashboard', 'icon': 'fas fa-tachometer-alt'},
                 {'name': 'Profile', 'url': 'view_customer_profile', 'icon': 'fas fa-user'},
-                # {'name': 'Bookings', 'url': '#', 'icon': 'fas fa-calendar-check'},
+                {'name': 'Bookings', 'url': 'view_bookings', 'icon': 'fas fa-calendar-check'},
                 
             ]
         elif user_type == 2:  # Shop Owner
@@ -26,7 +27,7 @@ def user_navigation(request):
                 {'name': 'Add Product', 'url': 'search_verified_products', 'icon': 'fas fa-plus'},
                 {'name': 'My Products', 'url': 'view_verified_products', 'icon': 'fas fa-box'},
                 {'name': 'Pending', 'url': 'view_pending_requests', 'icon': 'fas fa-clock'},
-                # {'name': 'Orders', 'url': '#', 'icon': 'fas fa-shopping-cart'},
+                {'name': 'Orders', 'url': 'shop_owner_requests', 'icon': 'fas fa-shopping-cart'},
             ]
         elif user_type == 3:  # Admin
             navigation = [

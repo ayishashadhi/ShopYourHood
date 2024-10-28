@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h2>Your Cart</h2>
+
+<div class="row">
+    {% for item in cart_items %}
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100">
+            <!-- Remove button in card header -->
+            <div class="card-header d-flex justify-content-end">
+                <form action="{% url 'remove_from_cart' item.id %}" method="POST" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm" aria-label="Remove">
+                        &times; <!-- HTML entity for a multiplication sign (cross) -->
+                    </button>
+                </form>
+            </div>
+
+            <!-- Product Image -->
+            <img src="{{ item.product.image.url }}" class="card-img-top fixed-card-img" alt="{{ item.product.name }}">
+
+            <!-- Card Body with Product Details -->
+            <div class="card-body">
+                <h5 class="card-title">{{ item.product.name }}</h5>
+                <p class="card-text">Price: ₹{{ item.price }}</p>
+                <p class="card-text">Quantity: {{ item.quantity }}</p>
+                <p class="card-text font-weight-bold">Total: ₹{{ item.total_item_price|floatformat:2 }}</p>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-warning" role="alert">
+            Your cart is empty.
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Total Price Section and Checkout Button -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="alert alert-info font-weight-bold" role="alert">
+        Total Cart Price: ₹{{ total_price|floatformat:2 }}
+    </div>
+    <a href="{% url 'checkout' %}" class="btn btn-primary">Checkout</a>
+    <a href="{% url 'estimate' %}" class="btn btn-secondary mb-4">Estimate</a>
+
+</div>
+
+{% endblock %}

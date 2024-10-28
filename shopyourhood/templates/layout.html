@@ -56,7 +56,7 @@
             <nav id="sidebar" class="col-md-4 col-lg-3 sidebar collapse show">
                 <div class="position-sticky">
                     {% block sidebar %}
-                    <ul class="nav mt-4 flex-column">
+                    <ul class="nav mt-4  mb-4 flex-column">
                         {% for item in sidebar %}
                             <li class="nav-item mt-3">
                                 <a class="nav-link" href="{% url item.url %}">
@@ -69,7 +69,7 @@
                 </div>
             </nav>
 
-            <main class="col-md-8 col-lg-9 px-md-4">
+            <main class="col-md-8 col-lg-9 px-md-4 mb-4">
                 {% block content %}
                 Default Content
                 {% endblock %}
@@ -78,7 +78,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white py-4">
+    <footer class="bg-dark text-white py-4 ">
         <div class="container">
             <div class="row">
                 <div class="col-md-4">

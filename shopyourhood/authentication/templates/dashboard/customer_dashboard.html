@@ -17,11 +17,11 @@
                     <h6 class="card-subtitle mb-2 text-muted">{{ product.category }}</h6>
 
                     <div class="d-flex justify-content-between">
-                        <a href="" class="btn btn-primary">
-                            <i class="fas fa-shopping-cart"></i> <!-- Example icon for booking -->
+                        <a href="{% url 'choose_shop' product.id 'book' %}" class="btn btn-primary">
+                            <i class="fas fa-book"></i> 
                         </a>
-                        <a href="" class="btn btn-secondary">
-                            <i class="fas fa-cart-plus"></i> <!-- Example icon for cart -->
+                        <a href="{% url 'choose_shop' product.id 'cart' %}" class="btn btn-secondary">
+                            <i class="fas fa-cart-plus"></i> 
                         </a>
                     </div>
                 </div>
