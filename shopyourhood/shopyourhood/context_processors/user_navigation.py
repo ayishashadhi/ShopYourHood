@@ -45,7 +45,7 @@ def user_navigation(request):
             {'name': 'Shop Register', 'url': 'shop_owner_register', 'icon': 'fas fa-user-plus'},
         ]
         sidebar = [
-            # {'name': 'About Us', 'url': '#', 'icon': 'fas fa-info-circle'},
+            {'name': 'About Us', 'url': 'about', 'icon': 'fas fa-info-circle'},
             # {'name': 'Contact', 'url': '#', 'icon': 'fas fa-envelope'},
         ]
 

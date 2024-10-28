@@ -1,18 +1,19 @@
 {% extends "layout.html" %}
+{% load widget_tweaks %}
 
 {% block title %}
-Customer Registration
+    Customer Registration
 {% endblock %}
 
 {% block content %}
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow">
+        <div class="col-md-7">
+            <div class="card shadow-lg border-0">
                 <div class="card-body">
-                    <h2 class="card-title text-center mb-4">Customer Registration</h2>
+                    <h2 class="card-title text-center mb-4 font-weight-bold">Customer Registration</h2>
 
-                    <!-- Display Django form errors here if needed -->
+                    <!-- Display form errors here if needed -->
                     {% if form.non_field_errors %}
                         <div class="alert alert-danger">
                             {% for error in form.non_field_errors %}
@@ -21,24 +22,48 @@ Customer Registration
                         </div>
                     {% endif %}
 
-                    <form method="post">
+                    <form method="post" class="px-3 py-2">
                         {% csrf_token %}
-                        <!-- Loop through form fields and apply Bootstrap styling -->
+
+                        <!-- Loop through form fields and add Bootstrap styling -->
                         {% for field in form %}
                             <div class="form-group">
-                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                                {{ field }}
-                                <!-- Display errors for each field individually -->
+                                <label for="{{ field.id_for_label }}" class="font-weight-semibold">{{ field.label }}</label>
+                                <div class="input-group">
+                                    {% if field.label == "Name" %}
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                    {% elif field.label == "Email" %}
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                        </div>
+                                    {% elif field.label == "Phone" %}
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                        </div>
+                                    {% elif field.label == "Password" %}
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                        </div>
+                                    {% elif field.label == "Confirm Password" %}
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                        </div>
+                                    {% endif %}
+                                    {{ field|add_class:"form-control" }}
+                                </div>
                                 {% if field.errors %}
-                                    <div class="invalid-feedback">
+                                    <small class="form-text text-danger">
                                         {% for error in field.errors %}
-                                            <p>{{ error }}</p>
+                                            {{ error }}
                                         {% endfor %}
-                                    </div>
+                                    </small>
                                 {% endif %}
                             </div>
                         {% endfor %}
-                        <button type="submit" class="btn btn-primary btn-block mt-4">Register</button>
+                        
+                        <button type="submit" class="btn btn-primary btn-block mt-4 font-weight-bold">Register</button>
                     </form>
                 </div>
             </div>
