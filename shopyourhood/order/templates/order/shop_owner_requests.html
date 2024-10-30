@@ -1,36 +1,46 @@
 {% extends 'layout.html' %}
+
 {% block content %}
 <h2>Pending Booking Requests</h2>
 
 <div class="row">
     {% for request in requests %}
-    <div class="col-md-6 col-lg-4 mb-4">
-        <div class="card h-100">
-            <img src="{{ request.booking.product.image.url }}" class="card-img-top fixed-card-img" alt="{{ request.booking.product.name }}">
-            <div class="card-body">
-                <h5 class="card-title">{{ request.booking.product.name }}</h5>
-                <p class="card-text">
-                    Customer: {{ request.booking.customer.username }}<br>
-                    Status: {{ request.status }}<br>
-                    Time: 
-                    {% if request.remaining_time %}
-                        <span id="countdown-{{ request.id }}"></span>
-                    {% else %}
-                        <span>Expired or timer not set</span>
-                    {% endif %}
-                </p>
-                <a href="{% url 'handle_order_request' request.id 'approve' %}" class="btn btn-success btn-sm">Approve</a>
-                <a href="{% url 'handle_order_request' request.id 'reject' %}" class="btn btn-danger btn-sm">Reject</a>
-            </div>
+    <div class="col-md-3 mb-3">
+        <div class="product-item">
+            <!-- Wishlist icon for cart functionality (optional) -->
+    
+            <!-- Product image and link -->
+            <figure>
+                <img src="{{ request.booking.product.image.url }}" class="tab-image" alt="{{ request.booking.product.name }}">
+            </figure>
+
+            <!-- Product details -->
+            <h3>{{ request.booking.product.name }}</h3>
+            <span class="qty">Customer: {{ request.booking.customer.username }}</span><br>
+            <span class="rating">Status: {{ request.status }}</span>
+            
+            <p class="card-text">
+                Time: 
+                {% if request.remaining_time %}
+                    <span id="countdown-{{ request.id }}"></span>
+                {% else %}
+                    <span>Expired or timer not set</span>
+                {% endif %}
+            </p>
+        
+
+        <!-- Approve and Reject buttons -->
+        <div class="">
+            <a href="{% url 'handle_order_request' request.id 'approve' %}" class="btn btn-success btn-sm">Approve</a>
+            <a href="{% url 'handle_order_request' request.id 'reject' %}" class="btn btn-danger btn-sm">Reject</a>
         </div>
     </div>
-
+</div>
+    <!-- Countdown Timer Script -->
     <script>
         (function() {
-            // Get remaining time in seconds for each card
             let timeRemaining = {{ request.remaining_time.total_seconds|default:0 }};
-            
-            // Function to format time in hh:mm:ss
+
             function formatTime(seconds) {
                 const hours = Math.floor(seconds / 3600);
                 const minutes = Math.floor((seconds % 3600) / 60);
@@ -38,7 +48,6 @@
                 return `${hours}h ${minutes}m ${secs}s`;
             }
 
-            // Target the countdown element
             const countdownElement = document.getElementById('countdown-{{ request.id }}');
             const interval = setInterval(() => {
                 if (timeRemaining <= 0) {
@@ -57,5 +66,4 @@
     </div>
     {% endfor %}
 </div>
-
 {% endblock %}

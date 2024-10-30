@@ -40,12 +40,12 @@ def user_navigation(request):
             ]
     else:
         navigation = [
+            
+            {'name': 'Register', 'url': '#', 'icon': 'fas fa-user-plus'},
             {'name': 'Login', 'url': 'login', 'icon': 'fas fa-sign-in-alt'},
-            {'name': 'Customer Register', 'url': 'customer_register', 'icon': 'fas fa-user-plus'},
-            {'name': 'Shop Register', 'url': 'shop_owner_register', 'icon': 'fas fa-user-plus'},
         ]
         sidebar = [
-            {'name': 'About Us', 'url': 'about', 'icon': 'fas fa-info-circle'},
+            # {'name': '', 'url': 'about', 'icon': 'fas fa-info-circle'},
             # {'name': 'Contact', 'url': '#', 'icon': 'fas fa-envelope'},
         ]
 

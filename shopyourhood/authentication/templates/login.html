@@ -12,19 +12,20 @@ Login
             <div class="card shadow-lg border-0">
                 <div class="card-body">
                     <h2 class="card-title text-center mb-4 font-weight-bold">Login</h2>
-
+                
                     <!-- Display Django form errors here if needed -->
                     {% if form.non_field_errors %}
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             {% for error in form.non_field_errors %}
                                 <p>{{ error }}</p>
                             {% endfor %}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     {% endif %}
-
+                
                     <form method="post" class="px-3 py-2">
                         {% csrf_token %}
-
+                
                         <!-- Loop through form fields with added styling -->
                         {% for field in form %}
                             <div class="form-group">
@@ -50,9 +51,12 @@ Login
                                 {% endif %}
                             </div>
                         {% endfor %}
-                        <button type="submit" class="btn btn-primary btn-block mt-3 font-weight-bold">Login</button>
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary btn-lg w-100 mt-3 font-weight-bold">Login</button>
+                        </div>
                     </form>
                 </div>
+                
             </div>
         </div>
     </div>

@@ -2,24 +2,33 @@
 {% block content %}
 <h2>Your Bookings</h2>
 <div class="row">
+    
+
+
     {% for booking in bookings %}
-    <div class="col-md-5 col-lg-3 mb-3">
-        <div class="card h-100">
-            <img src="{{ booking.product.image.url }}" class="card-img-top fixed-card-img" alt="{{ booking.product.name }}">
-            <div class="card-body">
-                <h5 class="card-title">{{ booking.product.name }}</h5>
-                <p class="card-text">
-                    Status: {{ booking.status }}<br>
+    <div class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+    <div class="col">
+        <div class="product-item">
+          <figure>
+            <a href="#">
+              <img src="{{ booking.product.image.url }}" class="tab-image" alt="{{ product.name }}">
+            </a>
+          </figure>
+          <h3>{{ booking.product.name }}</h3>
+          <span class="qty">Status</span><span class="rating">
+            {{ booking.status }}<br>
                     {% if booking.expires_at %}
                     Expires in: <span id="countdown-{{ booking.id }}"></span>
                     {% else %}
                     No expiration time set
                     {% endif %}
-                </p>
-            </div>
+          </span>
+          <div class="d-flex align-items-center justify-content-between mt-3">
+            
+          </div>
         </div>
+      </div>
     </div>
-
     {% if booking.expires_at %}
     <script>
         (function() {
